@@ -1,2 +1,5 @@
 # program-launcher
-Program Launcher
+
+##Program Launcher
+
+This is a simple launcher of any program you want. You can configure it inside the _**file config.js**_
