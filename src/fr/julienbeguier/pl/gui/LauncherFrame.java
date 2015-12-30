@@ -45,8 +45,8 @@ public class LauncherFrame extends JFrame {
 	private ImageIcon manageProgramsMenuIcon;
 	private ImageIcon settingsMenuIcon;
 	
-	private JFrame entryFrame;
-	private JFrame subsAddFramel;
+	private JFrame manageEntriesFrame;
+	private JFrame subsAddFrame;
 	private JFrame subsDeleteFrame;
 
 	//	private ImageIcon test;
@@ -80,8 +80,8 @@ public class LauncherFrame extends JFrame {
 		this.setSize(WIDTH, HEIGHT);
 		this.setIconImage(programIcon.getImage());
 		
-		this.entryFrame = null;
-		this.subsAddFramel = null;
+		this.manageEntriesFrame = null;
+		this.subsAddFrame = null;
 		this.subsDeleteFrame = null;
 	}
 
@@ -109,31 +109,31 @@ public class LauncherFrame extends JFrame {
 		});
 		this.addProgramMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (null == entryFrame) {
-					entryFrame = new AddEntryFrame(programIcon);
+				if (null == subsAddFrame) {
+					subsAddFrame = new AddEntryFrame(programIcon);
 				} else {
-					entryFrame.setVisible(true);
-					entryFrame.requestFocusInWindow();
+					subsAddFrame.setVisible(true);
+					subsAddFrame.requestFocusInWindow();
 				}
 			}
 		});
 		this.removeProgramMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (null == entryFrame) {
-					entryFrame = new DeleteEntryFrame(programIcon);					
+				if (null == subsDeleteFrame) {
+					subsDeleteFrame = new DeleteEntryFrame(programIcon);					
 				} else {
-					entryFrame.setVisible(true);
-					entryFrame.requestFocusInWindow();
+					subsDeleteFrame.setVisible(true);
+					subsDeleteFrame.requestFocusInWindow();
 				}
 			}
 		});
 		this.manageProgramsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (null == entryFrame) {
-					entryFrame = new ManageEntryFrame(programIcon);					
+				if (null == manageEntriesFrame) {
+					manageEntriesFrame = new ManageEntryFrame(programIcon);					
 				} else {
-					entryFrame.setVisible(true);
-					entryFrame.requestFocusInWindow();
+					manageEntriesFrame.setVisible(true);
+					manageEntriesFrame.requestFocusInWindow();
 				}
 			}
 		});
