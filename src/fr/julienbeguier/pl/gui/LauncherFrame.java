@@ -130,7 +130,7 @@ public class LauncherFrame extends JFrame {
 		this.manageProgramsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (null == manageEntriesFrame) {
-					manageEntriesFrame = new ManageEntryFrame(programIcon);					
+					manageEntriesFrame = new ManageEntryFrame(programIcon);
 				} else {
 					manageEntriesFrame.setVisible(true);
 					manageEntriesFrame.requestFocusInWindow();
