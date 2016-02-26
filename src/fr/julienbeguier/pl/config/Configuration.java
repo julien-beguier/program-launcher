@@ -33,7 +33,7 @@ public class Configuration {
 	private JSONObject	settingsObj;
 
 	private Configuration() {
-		URL confFile = this.getClass().getResource(CONFIGURATION_PATH);
+		URL confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
 		String confFileContent = null;
 
 		try {
@@ -50,19 +50,19 @@ public class Configuration {
 		}
 
 		if (confFileContent == null) {
-			System.err.println("Error, the program couldn't read the confifuartion file: \'" + CONFIGURATION_PATH + "\'");
+			System.err.println("Error, the program couldn't read the confifuartion file: \'" + this.CONFIGURATION_PATH + "\'");
 			System.exit(-1);
 		}
 
 		try {
 			this.configurationObj = new JSONObject(confFileContent);
-			this.launcherInfosObj = this.configurationObj.getJSONObject(CONF_KEY_LAUNCHER_INFOS);
-			this.programs = this.configurationObj.getJSONArray(CONF_KEY_PROGRAMS);
+			this.launcherInfosObj = this.configurationObj.getJSONObject(this.CONF_KEY_LAUNCHER_INFOS);
+			this.programs = this.configurationObj.getJSONArray(this.CONF_KEY_PROGRAMS);
 			this.nPrograms = this.programs.length();
 
 			Settings settings = Settings.getInstance();
-			this.settingsObj = this.configurationObj.getJSONObject(CONF_KEY_SETTINGS);
-			settings.setQuitOnProgramLaunched(this.settingsObj.getBoolean(CONF_KEY_SETTINGS_QUIT_ON_PROGRAM_LAUNCHED));
+			this.settingsObj = this.configurationObj.getJSONObject(this.CONF_KEY_SETTINGS);
+			settings.setQuitOnProgramLaunched(this.settingsObj.getBoolean(this.CONF_KEY_SETTINGS_QUIT_ON_PROGRAM_LAUNCHED));
 
 			//			for (int i = 0; i < this.nEclipse; i++) {
 			//				System.out.println("OBJ : " + eclipses.getJSONObject(i));
