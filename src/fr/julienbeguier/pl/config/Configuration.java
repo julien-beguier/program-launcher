@@ -50,7 +50,7 @@ public class Configuration {
 		}
 
 		if (confFileContent == null) {
-			System.err.println("Error, the program couldn't read the confifuartion file: \'" + this.CONFIGURATION_PATH + "\'");
+			System.err.println("Error, the program couldn't read the configuration file: \'" + this.CONFIGURATION_PATH + "\'");
 			System.exit(-1);
 		}
 
