@@ -41,8 +41,8 @@ public class ProgramListPanel extends JPanel {
 		this.programsListed.setLayoutOrientation(JList.VERTICAL);
 		this.programsListed.setCellRenderer(new ProgramListElement());
 		this.programsListed.setOpaque(false);
-		this.programsListed.setFixedCellWidth(parentDimension.width - 40);
-		this.programsListed.setFixedCellHeight(20);
+		this.programsListed.setFixedCellWidth(parentDimension.width);
+		this.programsListed.setFixedCellHeight(30);
 
 		this.add(this.programsListed);
 	}

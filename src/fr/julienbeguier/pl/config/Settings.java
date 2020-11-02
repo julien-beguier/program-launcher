@@ -20,7 +20,7 @@ public class Settings {
 		this.quit_on_program_launched = value;
 	}
 
-	public boolean quitOnProgramLaunched() {
+	public boolean getQuitOnProgramLaunched() {
 		return this.quit_on_program_launched;
 	}
 }

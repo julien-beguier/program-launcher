@@ -11,7 +11,7 @@ public class ProgramListElement implements ListCellRenderer<JLabel> {
 
 	private Color forgroundTextColor = Color.BLACK;
 	private Color selectionTextColor = Color.WHITE;
-	private Color selectionBackgroundColor = Color.BLUE;
+	private Color selectionBackgroundColor = Color.DARK_GRAY;
 
 	public ProgramListElement() {
 	}

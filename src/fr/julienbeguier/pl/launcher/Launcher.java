@@ -10,6 +10,8 @@ import fr.julienbeguier.pl.gui.LauncherFrame;
 
 public class Launcher {
 
+	private final String PROGRAM_NAME = "Program Launcher";
+	
 	public Launcher() {
 
 		try {
@@ -23,7 +25,7 @@ public class Launcher {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LauncherFrame window = new LauncherFrame("Program Launcher");
+					LauncherFrame window = new LauncherFrame(PROGRAM_NAME);
 					window.setVisible(true);
 					window.setLocationRelativeTo(null);
 					window.initGUI();

@@ -1,6 +1,8 @@
 package fr.julienbeguier.pl.config;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -20,10 +22,13 @@ public class Configuration {
 	private final String	CONF_KEY_PROGRAMS = "programs";
 	private final String	CONF_KEY_PROGRAM_ID = "id";
 	private final String	CONF_KEY_PROGRAM_NAME = "name";
-	private final String	CONF_KEY_PROGRAM_PATH = "path";
-	private final String	CONF_KEY_PROGRAM_ICONPATH = "icon_path";
+	private final String	CONF_KEY_PROGRAM_PATH = "binaryPath";
+	private final String	CONF_KEY_PROGRAM_ICONPATH = "iconPath";
 	private final String	CONF_KEY_SETTINGS = "settings";
 	private final String	CONF_KEY_SETTINGS_QUIT_ON_PROGRAM_LAUNCHED = "quit_on_program_launched";
+
+	// CONF FILE
+	URL confFile;
 
 	// CONF OBJ
 	private JSONObject	configurationObj;
@@ -33,13 +38,13 @@ public class Configuration {
 	private JSONObject	settingsObj;
 
 	private Configuration() {
-		URL confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
+		this.confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
 		String confFileContent = null;
 
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(confFile.openStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.confFile.openStream()));
 			String line;
-			StringBuffer fileContent = new StringBuffer(); 
+			StringBuffer fileContent = new StringBuffer();
 			while ((line = br.readLine()) != null) {
 				fileContent.append(line);
 				fileContent.append('\r');
@@ -64,10 +69,6 @@ public class Configuration {
 			this.settingsObj = this.configurationObj.getJSONObject(this.CONF_KEY_SETTINGS);
 			settings.setQuitOnProgramLaunched(this.settingsObj.getBoolean(this.CONF_KEY_SETTINGS_QUIT_ON_PROGRAM_LAUNCHED));
 
-			//			for (int i = 0; i < this.nEclipse; i++) {
-			//				System.out.println("OBJ : " + eclipses.getJSONObject(i));
-			//			}
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -77,6 +78,18 @@ public class Configuration {
 		if (instance == null)
 			instance = new Configuration();
 		return instance;
+	}
+
+	public void writeConfiguration() {
+		BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter(this.confFile.getPath()));
+			writer.write(this.configurationObj.toString(4));
+			writer.close();
+			System.out.println("Write on " + this.confFile.getPath());
+		} catch (IOException | JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public JSONObject getConfiguration() {
