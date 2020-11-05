@@ -26,6 +26,10 @@ public class AddEntryFrame extends AEntryFrame {
 
 	private static final long serialVersionUID = -2873844258681771170L;
 
+	// CONST
+	private final String EMPTY = "";
+
+	// GUI
 	private JTextField nameInput;
 	private JTextField pathInput;
 	private JTextField optionalIconPathInput;
@@ -33,7 +37,7 @@ public class AddEntryFrame extends AEntryFrame {
 	public AddEntryFrame(ImageIcon icon, LauncherPanel lp) {
 		super(icon);
 		this.setTitle("Add entry");
-		this.setSize(500, 190);
+		this.setSize(500, 225);
 		this.setResizable(false);
 		this.setVisible(true);
 
@@ -42,9 +46,11 @@ public class AddEntryFrame extends AEntryFrame {
 
 		JLabel pathLabel = new JLabel("Path");
 		this.pathInput = new JTextField();
+		// TODO add an executable filtered explorer button
 
 		JLabel optionalIconPathLabel = new JLabel("(Optional) Icon path");
 		this.optionalIconPathInput = new JTextField();
+		// TODO add an image filtered explorer button
 
 		JPanel fieldInputPanel = new JPanel();
 
@@ -70,25 +76,30 @@ public class AddEntryFrame extends AEntryFrame {
 				if (inputsAreValid) {
 					/* Because id starts at 0, if we have 4 programs
 					 * in the list, the last Component added will have
-					 * id = 3 but will be Component n�4 so we can use
+					 * id = 3 but will be Component n°4 so we can use
 					 * the number of components added to determine the
 					 * next id
 					 */
 					int id = lp.getComponentCount();
 
+					// Build new entry
 					String name = nameInput.getText();
 					String path = pathInput.getText();
 					String oIconPath = optionalIconPathInput.getText();
 					ProgramElementJson pej = new ProgramElementJson(id, name, path, oIconPath);
 					ProgramElement pe = new ProgramElement(pej);
 
-					// Add new entry to panel
+					// Add new entry to main panel
 					lp.addElement(pe);
 
-					// Add new entry to config file
+					// Add new entry to configuration file
 					JSONObject jsonPe = new JSONObject(pej);
-					Configuration.getInstance().getPrograms().put(jsonPe);
-					Configuration.getInstance().writeConfiguration();
+					Configuration config = Configuration.getInstance();
+					config.getPrograms().put(jsonPe);
+					config.writeConfiguration();
+
+					// Reset input fields
+					resetInputFields();
 
 					setVisible(false);
 				}
@@ -121,5 +132,11 @@ public class AddEntryFrame extends AEntryFrame {
 		}
 
 		return true;
+	}
+
+	private void resetInputFields() {
+		this.nameInput.setText(EMPTY);
+		this.pathInput.setText(EMPTY);
+		this.optionalIconPathInput.setText(EMPTY);
 	}
 }

@@ -6,10 +6,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import fr.julienbeguier.pl.gui.ProgramElement;
+import fr.julienbeguier.pl.gui.subs.ProgramListElement;
+import fr.julienbeguier.pl.gui.subs.ProgramListElementCellRenderer;
+import fr.julienbeguier.pl.json.ProgramElementJson;
 
 public class Configuration {
 
@@ -38,6 +48,16 @@ public class Configuration {
 	private JSONObject	settingsObj;
 
 	private Configuration() {
+		readConfiguration();
+	}
+
+	public static Configuration getInstance() {
+		if (instance == null)
+			instance = new Configuration();
+		return instance;
+	}
+	
+	public void readConfiguration() {
 		this.confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
 		String confFileContent = null;
 
@@ -74,12 +94,6 @@ public class Configuration {
 		}
 	}
 
-	public static Configuration getInstance() {
-		if (instance == null)
-			instance = new Configuration();
-		return instance;
-	}
-
 	public void writeConfiguration() {
 		BufferedWriter writer;
 		try {
@@ -90,6 +104,98 @@ public class Configuration {
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<ProgramElement> getProgramList() {
+		JSONObject element;
+		int id;
+		String name;
+		String path;
+		String iconPath;
+		ProgramElement pe;
+
+		int nbProgram = this.programs.length();
+		List<ProgramElement> programList = new ArrayList<ProgramElement>();
+
+		for (int i = 0; i < nbProgram; i++) {
+			try {
+				element = this.programs.getJSONObject(i);
+				id = element.getInt(CONF_KEY_PROGRAM_ID);
+				name = element.getString(CONF_KEY_PROGRAM_NAME);
+				path = element.getString(CONF_KEY_PROGRAM_PATH);
+				iconPath= element.getString(CONF_KEY_PROGRAM_ICONPATH);
+
+				pe = new ProgramElement(new ProgramElementJson(id, name, path, iconPath));
+				programList.add(pe);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return programList;
+	}
+
+	public JList<ProgramListElement> getProgramList(int scrollPanelWidth) {
+		JSONObject element;
+		int id;
+		String name;
+		String path;
+		String iconPath;
+		ProgramElement pe;
+		String labelText;
+
+		int nbProgram = this.programs.length();
+		ProgramListElement[] content = new ProgramListElement[nbProgram];
+		for (int i = 0; i < nbProgram; i++) {
+			try {
+				element = this.programs.getJSONObject(i);
+				id = element.getInt(CONF_KEY_PROGRAM_ID);
+				name = element.getString(CONF_KEY_PROGRAM_NAME);
+				path = element.getString(CONF_KEY_PROGRAM_PATH);
+				iconPath= element.getString(CONF_KEY_PROGRAM_ICONPATH);
+
+				labelText = " " + name;
+				pe = new ProgramElement(new ProgramElementJson(id, name, path, iconPath));
+				content[i] = new ProgramListElement(labelText, pe);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		JList<ProgramListElement> programList = new JList<ProgramListElement>(content);
+		programList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		programList.setLayoutOrientation(JList.VERTICAL);
+		programList.setCellRenderer(new ProgramListElementCellRenderer());
+		programList.setOpaque(false);
+		programList.setFixedCellWidth(scrollPanelWidth);
+		programList.setFixedCellHeight(30);
+
+		return programList;
+	}
+
+	public void removeElementAtId(int id) {
+		int indexToRemove = 0;
+
+		for (int i = 0; i < this.programs.length(); i++) {
+			JSONObject element;
+			int elementId;
+
+			try {
+				element = this.programs.getJSONObject(i);
+				elementId = element.getInt(CONF_KEY_PROGRAM_ID);
+
+				if (elementId == id) {
+					// To avoid editing the array while iterating
+					indexToRemove = i;
+					break;
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		this.programs.remove(indexToRemove);
 	}
 
 	public JSONObject getConfiguration() {

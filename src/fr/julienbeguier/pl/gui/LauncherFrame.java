@@ -14,7 +14,6 @@ import org.json.JSONException;
 import fr.julienbeguier.pl.config.Configuration;
 import fr.julienbeguier.pl.gui.subs.AddEntryFrame;
 import fr.julienbeguier.pl.gui.subs.DeleteEntryFrame;
-import fr.julienbeguier.pl.gui.subs.ManageEntryFrame;
 
 public class LauncherFrame extends JFrame {
 
@@ -31,7 +30,6 @@ public class LauncherFrame extends JFrame {
 	private JMenu aboutMenu;
 	private JMenuItem addProgramMenuItem;
 	private JMenuItem removeProgramMenuItem;
-	private JMenuItem manageProgramsMenuItem;
 	private JMenuItem settingsMenuItem;
 	private JMenuItem saveSettingsMenuItem;
 	private JMenuItem quitMenuItem;
@@ -41,7 +39,6 @@ public class LauncherFrame extends JFrame {
 	private IconLoader iconLoader;
 
 	// FRAMES
-	private JFrame manageEntriesFrame;
 	private JFrame subsAddFrame;
 	private JFrame subsDeleteFrame;
 
@@ -70,7 +67,6 @@ public class LauncherFrame extends JFrame {
 		this.setSize(WIDTH, HEIGHT);
 		this.setIconImage(this.iconLoader.programIcon.getImage());
 		
-		this.manageEntriesFrame = null;
 		this.subsAddFrame = null;
 		this.subsDeleteFrame = null;
 	}
@@ -85,7 +81,6 @@ public class LauncherFrame extends JFrame {
 		this.quitMenuItem = new JMenuItem("Quit", this.iconLoader.exitMenuIcon);
 		this.addProgramMenuItem = new JMenuItem("Add program", this.iconLoader.addProgramMenuIcon);
 		this.removeProgramMenuItem = new JMenuItem("Remove program", this.iconLoader.removeProgramMenuIcon);
-		this.manageProgramsMenuItem = new JMenuItem("Manage programs", this.iconLoader.manageProgramsMenuIcon);
 		this.aboutProgramLauncherMenuItem = new JMenuItem("About Program Launcher", this.iconLoader.programMenuIcon);
 
 		this.settingsMenuItem.addActionListener(new ActionListener() {
@@ -116,26 +111,17 @@ public class LauncherFrame extends JFrame {
 		this.removeProgramMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (null == subsDeleteFrame) {
-					subsDeleteFrame = new DeleteEntryFrame(iconLoader.programIcon);
+					subsDeleteFrame = new DeleteEntryFrame(iconLoader.programIcon, launcherPanel);
 				} else {
+					((DeleteEntryFrame) subsDeleteFrame).refreshDeleteProgramList();
 					subsDeleteFrame.setVisible(true);
 					subsDeleteFrame.requestFocusInWindow();
 				}
 			}
 		});
-		this.manageProgramsMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if (null == manageEntriesFrame) {
-					manageEntriesFrame = new ManageEntryFrame(iconLoader.programIcon);
-				} else {
-					manageEntriesFrame.setVisible(true);
-					manageEntriesFrame.requestFocusInWindow();
-				}
-			}
-		});
 		this.aboutProgramLauncherMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				JOptionPane.showMessageDialog(null, "Program Launcher made\nby Julien B�guier !\n\nVersion: " + PROGRAM_VERSION, "About Program Launcher", JOptionPane.INFORMATION_MESSAGE, iconLoader.aboutIcon);
+				JOptionPane.showMessageDialog(null, "Program Launcher made\nby Julien Béguier !\n\nVersion: " + PROGRAM_VERSION, "About Program Launcher", JOptionPane.INFORMATION_MESSAGE, iconLoader.aboutIcon);
 			}
 		});
 
@@ -144,7 +130,6 @@ public class LauncherFrame extends JFrame {
 		this.fileMenu.add(this.quitMenuItem);
 		this.editMenu.add(this.addProgramMenuItem);
 		this.editMenu.add(this.removeProgramMenuItem);
-		this.editMenu.add(this.manageProgramsMenuItem);
 		this.aboutMenu.add(this.aboutProgramLauncherMenuItem);
 		this.menuBar.add(this.fileMenu);
 		this.menuBar.add(this.editMenu);

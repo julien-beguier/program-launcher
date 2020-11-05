@@ -1,15 +1,11 @@
 package fr.julienbeguier.pl.gui;
 
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import fr.julienbeguier.pl.config.Configuration;
-import fr.julienbeguier.pl.json.ProgramElementJson;
 
 public class LauncherPanel extends JPanel {
 
@@ -19,26 +15,22 @@ public class LauncherPanel extends JPanel {
 
 	public LauncherPanel(int width, int height) {
 		super();
-
-		Configuration config = Configuration.getInstance();
-		JSONArray programArray = config.getPrograms();
-		int nProgram = config.getNProgram();
-
 		this.setLayout(new GridLayout(0, 1));
 
-		JSONObject program;
-		ProgramElement pe;
+		refreshProgramList();
+	}
 
-		for (int i = 0; i < nProgram; i++) {
-			try {
-				program = programArray.getJSONObject(i);
-				ProgramElementJson pej = new ProgramElementJson(program.getInt(config.getConfKeyProgramId()), program.getString(config.getConfKeyProgramName()), program.getString(config.getConfKeyProgramPath()), program.getString(config.getConfKeyProgramIconPath()));
-				pe = new ProgramElement(pej);
-				this.add(pe, pe.getProgramElementJson().getId());
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+	public void refreshProgramList() {
+		this.removeAll();
+
+		// Build or rebuild the program list
+		Configuration config = Configuration.getInstance();
+		List<ProgramElement> programList = config.getProgramList();
+
+		for (ProgramElement pe: programList) {
+			this.add(pe);
 		}
+		this.validate();
 	}
 
 	public void addElement(ProgramElement pe) {
@@ -47,6 +39,7 @@ public class LauncherPanel extends JPanel {
 	}
 
 	public void removeElement(ProgramElement pe) {
-		this.remove(pe.getProgramElementJson().getId());
+		this.remove(pe);
+		this.validate();
 	}
 }

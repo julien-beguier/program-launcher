@@ -1,34 +1,23 @@
 package fr.julienbeguier.pl.gui.subs;
 
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
-public class ProgramListElement implements ListCellRenderer<JLabel> {
+import fr.julienbeguier.pl.gui.ProgramElement;
 
-	private Color forgroundTextColor = Color.BLACK;
-	private Color selectionTextColor = Color.WHITE;
-	private Color selectionBackgroundColor = Color.DARK_GRAY;
+public class ProgramListElement extends JLabel {
 
-	public ProgramListElement() {
+	private static final long serialVersionUID = 7059076863974061917L;
+
+	// DATA
+	private ProgramElement programElement;
+	
+	public ProgramListElement(String name, ProgramElement pe) {
+		super(name);
+
+		this.programElement = pe;
 	}
 
-	@Override
-	public Component getListCellRendererComponent(JList<? extends JLabel> list, JLabel value, int index, boolean isSelected, boolean cellHasFocus) {
-		JLabel label = value;
-
-		if (isSelected) {
-			label.setBackground(this.selectionBackgroundColor);
-			label.setForeground(this.selectionTextColor);
-		} else {
-			label.setBackground(null);
-			label.setForeground(this.forgroundTextColor);
-		}
-		label.setEnabled(true);
-		label.setOpaque(true);
-		return label;
+	public ProgramElement getProgramElement() {
+		return this.programElement;
 	}
 }
