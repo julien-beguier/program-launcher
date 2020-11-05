@@ -2,7 +2,7 @@ OK	faire marcher le launch d'application
 
 OK	fenetre d'ajout dans la liste
 	fenetre pour supprimer dans la liste
-	fenetre pour gérer la liste
+	fenetre pour gÃ©rer la liste
 
 	bouton pour recuperer le path proprement
 
@@ -15,4 +15,4 @@ OK	fenetre d'ajout dans la liste
 	charger les icones depuis l'executable
 
 	faire un systeme de langue
-	faire que le bouton contient l'image du program et pas les séparer.
+	faire que le bouton contient l'image du program et pas les sÃ©parer.

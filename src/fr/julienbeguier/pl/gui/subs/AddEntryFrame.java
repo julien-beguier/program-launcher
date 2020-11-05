@@ -70,7 +70,7 @@ public class AddEntryFrame extends AEntryFrame {
 				if (inputsAreValid) {
 					/* Because id starts at 0, if we have 4 programs
 					 * in the list, the last Component added will have
-					 * id = 3 but will be Component n°4 so we can use
+					 * id = 3 but will be Component nï¿½4 so we can use
 					 * the number of components added to determine the
 					 * next id
 					 */

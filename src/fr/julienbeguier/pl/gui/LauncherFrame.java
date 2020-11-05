@@ -135,7 +135,7 @@ public class LauncherFrame extends JFrame {
 		});
 		this.aboutProgramLauncherMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				JOptionPane.showMessageDialog(null, "Program Launcher made\nby Julien Béguier !\n\nVersion: " + PROGRAM_VERSION, "About Program Launcher", JOptionPane.INFORMATION_MESSAGE, iconLoader.aboutIcon);
+				JOptionPane.showMessageDialog(null, "Program Launcher made\nby Julien Bï¿½guier !\n\nVersion: " + PROGRAM_VERSION, "About Program Launcher", JOptionPane.INFORMATION_MESSAGE, iconLoader.aboutIcon);
 			}
 		});
 
