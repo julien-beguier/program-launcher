@@ -16,6 +16,7 @@ public class IconLoader {
 	public ImageIcon saveSettingsMenuIcon;
 	public ImageIcon exitMenuIcon;
 	public ImageIcon errorIcon;
+	public ImageIcon warningIcon;
 
 	private IconLoader() {
 	}
@@ -36,6 +37,7 @@ public class IconLoader {
 		this.saveSettingsMenuIcon = new ImageIcon(getClass().getResource("/save_16px.png"));
 		this.exitMenuIcon = new ImageIcon(getClass().getResource("/exit_16px.png"));
 		this.errorIcon = new ImageIcon(getClass().getResource("/dialog_error_64px.png"));
+		this.warningIcon = new ImageIcon(getClass().getResource("/dialog_warning_64px.png"));
 	}
 
 }

@@ -56,7 +56,7 @@ public class Configuration {
 			instance = new Configuration();
 		return instance;
 	}
-	
+
 	public void readConfiguration() {
 		this.confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
 		String confFileContent = null;

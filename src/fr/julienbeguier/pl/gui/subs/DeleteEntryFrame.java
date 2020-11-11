@@ -35,13 +35,6 @@ public class DeleteEntryFrame extends AEntryFrame {
 		this.setVisible(true);
 
 		JPanel actionsContent = new JPanel();
-//		JButton addButton = new JButton("Add");
-//		addButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent event) {
-//				setVisible(false); // TODO
-//			}
-//		});
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
@@ -51,15 +44,15 @@ public class DeleteEntryFrame extends AEntryFrame {
 				ProgramListElement ple = programsListed.getSelectedValue();
 				ProgramElement pe = ple.getProgramElement();
 
-				// Remove entry from main panel
-				lp.removeElement(pe);
-
 				// Remove entry from scroll panel list
 				programsListed.remove(ple);
 
 				// Remove entry from configuration file
 				Configuration config = Configuration.getInstance();
 				config.removeElementAtId(pe.getProgramElementJson().getId());
+
+				// Remove entry from main panel
+				lp.removeElement(pe);
 
 				// Refresh the delete program list
 				refreshDeleteProgramList();
@@ -76,19 +69,17 @@ public class DeleteEntryFrame extends AEntryFrame {
 				// Refresh the main program list
 				lp.refreshProgramList();
 
-				
 				setVisible(false);
 			}
 		});
 
 		actionsContent.setSize(100, 50);
 
-//		actionsContent.add(addButton);
 		actionsContent.add(deleteButton);
 		actionsContent.add(doneButton);
 
 		this.scrollPane = new ScrollPane();
-		
+
 		// Build the program list
 		Configuration config = Configuration.getInstance();
 		this.programsListed = config.getProgramList(scrollPanelDimension.width);

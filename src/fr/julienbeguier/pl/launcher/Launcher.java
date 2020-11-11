@@ -26,8 +26,8 @@ public class Launcher {
 			public void run() {
 				try {
 					LauncherFrame window = new LauncherFrame(PROGRAM_NAME);
-					window.setVisible(true);
 					window.setLocationRelativeTo(null);
+					window.setVisible(true);
 					window.initGUI();
 				} catch (Exception e) {
 					e.printStackTrace();

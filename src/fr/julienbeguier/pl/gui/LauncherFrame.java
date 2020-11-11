@@ -20,9 +20,6 @@ public class LauncherFrame extends JFrame {
 	private static final long serialVersionUID = 6232060395028975287L;
 	private String PROGRAM_VERSION;
 
-	private final int WIDTH = 400;
-	private final int HEIGHT = 200;
-
 	// GUI
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -33,7 +30,7 @@ public class LauncherFrame extends JFrame {
 	private JMenuItem settingsMenuItem;
 	private JMenuItem saveSettingsMenuItem;
 	private JMenuItem quitMenuItem;
-	private JMenuItem aboutProgramLauncherMenuItem;	
+	private JMenuItem aboutProgramLauncherMenuItem;
 
 	// ICONS
 	private IconLoader iconLoader;
@@ -49,7 +46,7 @@ public class LauncherFrame extends JFrame {
 		super(name);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.launcherPanel = new LauncherPanel(WIDTH, HEIGHT);
+		this.launcherPanel = new LauncherPanel();
 		this.setContentPane(this.launcherPanel);
 		this.setResizable(false);
 		this.pack();
@@ -59,8 +56,6 @@ public class LauncherFrame extends JFrame {
 	private void initImages() {
 		this.iconLoader = IconLoader.getInstance();
 		this.iconLoader.loadIcons();
-
-		//		this.test = (ImageIcon)fsv.getSystemIcon(new File("abc.exe")); // TODO FIND A WAY TO DISPLAY .EXE ICON
 	}
 
 	private void initFrame() {
@@ -145,7 +140,7 @@ public class LauncherFrame extends JFrame {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Init program settings
 	}
 

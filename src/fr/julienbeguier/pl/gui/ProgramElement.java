@@ -29,17 +29,18 @@ public class ProgramElement extends JPanel {
 	private final JLabel label;
 	private final JButton button;
 	private ImageIcon icon;
+	public static Dimension cellSize = new Dimension(300, 80);
 
 	public ProgramElement(ProgramElementJson pej) {
 		super();
 
 		this.pej = pej;
 		
-		this.icon = new ImageIcon(this.pej.getIconPath()); // TODO
+		this.icon = new ImageIcon(this.pej.getIconPath());
 		this.label = new JLabel(this.pej.getName());
 
 		Image img = icon.getImage();
-		Image rImg = img.getScaledInstance(64, 64,  Image.SCALE_SMOOTH);
+		Image rImg = img.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 		this.icon = new ImageIcon(rImg);
 		this.label.setIcon(icon);
 
@@ -63,12 +64,12 @@ public class ProgramElement extends JPanel {
 
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		this.setPreferredSize(new Dimension(300, 80));
+		this.setPreferredSize(ProgramElement.cellSize);
 
 		this.add(label);
 		this.add(this.button, BorderLayout.EAST);
 	}
-	
+
 	public ProgramElementJson getProgramElementJson() {
 		return this.pej;
 	}

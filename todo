@@ -1,18 +1,18 @@
-OK	faire marcher le launch d'application
+OK			faire marcher le launch d'application
 
-OK	fenetre d'ajout dans la liste
-	fenetre pour supprimer dans la liste
-	fenetre pour gérer la liste
+OK			fenetre d'ajout dans la liste
+OK			fenetre pour supprimer dans la liste
+CANCELED	fenetre pour gérer la liste
 
-	bouton pour recuperer le path proprement
+OK			bouton pour recuperer le path proprement
 
-	changer le nom du fichier de conf -> settings.json
-	changer le systeme de chargement du fichier de configuration
-		-> Si fichier vide (remise a zero manuelle) -> ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
-		-> Si pas de fichier -> le creer, ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
-		-> Si fichier existant + est lisible -> charger les settings et la liste
+			changer le nom du fichier de conf -> settings.json
+			changer le systeme de chargement du fichier de configuration
+				-> Si fichier vide (remise a zero manuelle) -> ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
+				-> Si pas de fichier -> le creer, ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
+				-> Si fichier existant + est lisible -> charger les settings et la liste
 
-	charger les icones depuis l'executable
+CANCELED	charger les icones depuis l'executable
 
-	faire un systeme de langue
-	faire que le bouton contient l'image du program et pas les séparer.
+			faire un systeme de langue
+CANCELED	faire que le bouton contient l'image du program et pas les séparer.

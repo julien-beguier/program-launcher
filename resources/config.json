@@ -29,6 +29,6 @@
 		}
 	],
 	"settings": {
-		"quit_on_program_launched":true
+		"quit_on_program_launched":false
 	}
 }

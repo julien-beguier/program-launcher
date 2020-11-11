@@ -11,9 +11,7 @@ public class LauncherPanel extends JPanel {
 
 	private static final long serialVersionUID = -407878933197950750L;
 
-	// GUI
-
-	public LauncherPanel(int width, int height) {
+	public LauncherPanel() {
 		super();
 		this.setLayout(new GridLayout(0, 1));
 
@@ -30,16 +28,24 @@ public class LauncherPanel extends JPanel {
 		for (ProgramElement pe: programList) {
 			this.add(pe);
 		}
+
+//		int newPanelHeight = programList.size() * ProgramElement.cellSize.height;
+//		Dimension newPanelDimension = new Dimension(ProgramElement.cellSize.width, newPanelHeight);
+//		this.setSize(newPanelDimension);
+//		this.setPreferredSize(newPanelDimension);
+
 		this.validate();
 	}
 
 	public void addElement(ProgramElement pe) {
 		this.add(pe);
-		this.validate();
+//		this.validate();
+		this.refreshProgramList();
 	}
 
 	public void removeElement(ProgramElement pe) {
 		this.remove(pe);
-		this.validate();
+//		this.validate();
+		this.refreshProgramList();
 	}
 }
