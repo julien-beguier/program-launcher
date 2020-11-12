@@ -2,10 +2,12 @@ package fr.julienbeguier.pl.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,11 @@ public class Configuration {
 	public static Configuration instance = null;
 
 	// CONST VARS
-	private final String	CONFIGURATION_PATH = "/config.json";
+	private final String	CONFIGURATION_DEFAULT_PATH = "/settings.json";
+	private final String	SAVED_SETTINGS_FILE = "/program_launcher_settings.json";
+	private final String	SAVED_CONFIGURATION_WINDOWS_PATH = "/AppData";
+	private final String	SAVED_CONFIGURATION_UNIX_PATH = "/.config";
+	private final String	APPLICATION_DIRECTORY_PATH = "/fr.julienbeguier";
 	private final String	CONF_KEY_LAUNCHER_INFOS = "launcher_infos";
 	private final String	CONF_KEY_LAUNCHER_INFOS_VERSION = "version";
 	private final String	CONF_KEY_PROGRAMS = "programs";
@@ -38,16 +44,24 @@ public class Configuration {
 	private final String	CONF_KEY_SETTINGS_QUIT_ON_PROGRAM_LAUNCHED = "quit_on_program_launched";
 
 	// CONF FILE
-	URL confFile;
+	private String		osBasedSettingsFilePath;
+	private InputStream	inputConfigFile;
+//	private URL			configFileURL;
 
 	// CONF OBJ
+	private String		configFileContent = null;
 	private JSONObject	configurationObj;
 	private JSONObject	launcherInfosObj;
 	private JSONArray	programs;
 	private int			nPrograms;
 	private JSONObject	settingsObj;
 
+	// DATA
+	private final SystemProperties systemProperties;
+
 	private Configuration() {
+		this.systemProperties = determineSystemProperties();
+
 		readConfiguration();
 	}
 
@@ -57,30 +71,74 @@ public class Configuration {
 		return instance;
 	}
 
-	public void readConfiguration() {
-		this.confFile = this.getClass().getResource(this.CONFIGURATION_PATH);
-		String confFileContent = null;
+	private boolean checkForSavedConfiguration() {
+		String userHome = this.systemProperties.getUserHome();
+		if (this.systemProperties.isUnix()) {
+			// Checking if the system is Unix
+			this.osBasedSettingsFilePath =
+					userHome + SAVED_CONFIGURATION_UNIX_PATH + APPLICATION_DIRECTORY_PATH + SAVED_SETTINGS_FILE;
+		} else {
+			// Otherwise, it should be Windows, well I hope so
+			this.osBasedSettingsFilePath =
+					userHome + SAVED_CONFIGURATION_WINDOWS_PATH + APPLICATION_DIRECTORY_PATH + SAVED_SETTINGS_FILE;
+		}
+
+		File settingsFile = new File(this.osBasedSettingsFilePath);
+		if (!settingsFile.exists()) {
+			// Create the directories to validate the path
+			try {
+				settingsFile.getParentFile().mkdirs();
+				settingsFile.createNewFile();
+			} catch (IOException e) {
+				System.err.println("Failed to create directory or file for path :" + this.osBasedSettingsFilePath);
+				e.printStackTrace();
+			}
+			// No saved settings file found
+			return false;
+		}
 
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(this.confFile.openStream()));
+			FileInputStream configFileInputStream = new FileInputStream(settingsFile);
+			BufferedReader br = new BufferedReader(new InputStreamReader(configFileInputStream));
 			String line;
 			StringBuffer fileContent = new StringBuffer();
 			while ((line = br.readLine()) != null) {
 				fileContent.append(line);
-				fileContent.append('\r');
 			}
-			confFileContent = fileContent.toString().trim();
+			this.configFileContent = fileContent.toString().trim();
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// Settings loaded from existing settings file
+		return true;
+	}
 
-		if (confFileContent == null) {
-			System.err.println("Error, the program couldn't read the configuration file: \'" + this.CONFIGURATION_PATH + "\'");
+	private void readDefaultConfiguration() {
+		this.inputConfigFile = this.getClass().getResourceAsStream(this.CONFIGURATION_DEFAULT_PATH);
+		if (this.inputConfigFile == null) {
+			System.err.println("Error : \'" + this.CONFIGURATION_DEFAULT_PATH + "\' is not found !");
+			// Can't read the default settings file inside the jar? THIS is a problem
 			System.exit(-1);
 		}
 
 		try {
-			this.configurationObj = new JSONObject(confFileContent);
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.inputConfigFile));
+			String line;
+			StringBuffer fileContent = new StringBuffer();
+			while ((line = br.readLine()) != null) {
+				fileContent.append(line);
+			}
+			this.configFileContent = fileContent.toString().trim();
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void parseSettingsJson() {
+		try {
+			this.configurationObj = new JSONObject(this.configFileContent);
 			this.launcherInfosObj = this.configurationObj.getJSONObject(this.CONF_KEY_LAUNCHER_INFOS);
 			this.programs = this.configurationObj.getJSONArray(this.CONF_KEY_PROGRAMS);
 			this.nPrograms = this.programs.length();
@@ -94,16 +152,39 @@ public class Configuration {
 		}
 	}
 
+	public void readConfiguration() {
+		// Checking for a saved settings file
+		 boolean settingsLoaded = checkForSavedConfiguration();
+
+		if (!settingsLoaded) {
+			// Otherwise reading the default settings file inside Jar (or resources)
+			readDefaultConfiguration();
+		}
+
+		// When the settings file is read, load it's content into JsonObjects for manipulation
+		parseSettingsJson();
+
+		// Finally, write the default settings file if the program is launched for the first time
+		this.writeConfiguration();
+	}
+
 	public void writeConfiguration() {
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(this.confFile.getPath()));
+			writer = new BufferedWriter(new FileWriter(this.osBasedSettingsFilePath));
 			writer.write(this.configurationObj.toString(4));
 			writer.close();
-			System.out.println("Write on " + this.confFile.getPath());
+			System.out.println("Write on " + this.osBasedSettingsFilePath);
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public SystemProperties determineSystemProperties() {
+		String os = System.getProperty("os.name");
+		String home = System.getProperty("user.home");
+
+		return new SystemProperties(os, home);
 	}
 
 	public List<ProgramElement> getProgramList() {
