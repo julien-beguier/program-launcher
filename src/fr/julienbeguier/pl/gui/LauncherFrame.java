@@ -46,7 +46,7 @@ public class LauncherFrame extends JFrame {
 		super(name);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.launcherPanel = new LauncherPanel();
+		this.launcherPanel = new LauncherPanel(this);
 		this.setContentPane(this.launcherPanel);
 		this.setResizable(false);
 		this.pack();

@@ -1,16 +1,21 @@
 OK			faire marcher le launch d'application
+OK			faire marcher le menu Save Settings
 
 OK			fenetre d'ajout dans la liste
 OK			fenetre pour supprimer dans la liste
 CANCELED	fenetre pour gérer la liste
 
 OK			bouton pour recuperer le path proprement
+OK			corriger le resize quand on ajoute ou supprime des entrees
 
 			changer le nom du fichier de conf -> settings.json
 			changer le systeme de chargement du fichier de configuration
-				-> Si fichier vide (remise a zero manuelle) -> ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
-				-> Si pas de fichier -> le creer, ecrire la conf par defaut, liste vide et proposer d'ajouter dans la liste
-				-> Si fichier existant + est lisible -> charger les settings et la liste
+				->	Si fichier vide (remise a zero manuelle) -> ecrire la conf par
+					defaut, liste vide et proposer d'ajouter dans la liste
+				->	Si pas de fichier -> le creer, ecrire la conf par defaut, liste
+					vide et proposer d'ajouter dans la liste
+				->	Si fichier existant + est lisible -> charger les settings et la liste
+			faire le menu des settings
 
 CANCELED	charger les icones depuis l'executable
 

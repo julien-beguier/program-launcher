@@ -28,21 +28,21 @@ public class ProgramElement extends JPanel {
 	// GUI
 	private final JLabel label;
 	private final JButton button;
-	private ImageIcon icon;
-	public static Dimension cellSize = new Dimension(300, 80);
+	private final ImageIcon icon;
+	public final static Dimension cellSize = new Dimension(300, 80);
 
 	public ProgramElement(ProgramElementJson pej) {
 		super();
 
 		this.pej = pej;
 		
-		this.icon = new ImageIcon(this.pej.getIconPath());
+		ImageIcon iconTmp = new ImageIcon(this.pej.getIconPath());
 		this.label = new JLabel(this.pej.getName());
 
-		Image img = icon.getImage();
+		Image img = iconTmp.getImage();
 		Image rImg = img.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
 		this.icon = new ImageIcon(rImg);
-		this.label.setIcon(icon);
+		this.label.setIcon(this.icon);
 
 		this.button = new JButton("Launch");
 		this.button.addActionListener(new ActionListener() {

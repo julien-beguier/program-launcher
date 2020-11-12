@@ -1,34 +1,16 @@
 {
 	"launcher_infos": {
-		"version":"0.5.0"
+		"version":"1.0"
 	},
 	"programs":[
 		{
 			"id":0,
-			"name":"Eclipse Luna",
-			"binaryPath":"C:\\Program Files\\FileZilla FTP Client\\filezilla.exe",
-			"iconPath":"C:\\Program Files (x86)\\Eclipse Luna\\plugins\\org.eclipse.platform_4.4.2.v20150204-1700\\eclipse1024.png"
-		},
-		{
-			"id":1,
-			"name":"Eclipse Kepler",
-			"binaryPath":"C:\\Program Files\\FileZilla FTP Client\\filezilla.exe",
-			"iconPath":"C:\\Program Files (x86)\\Eclipse Kepler\\plugins\\org.eclipse.epp.package.standard_2.0.2.20140224-0000\\eclipse256.png"
-		},
-		{
-			"id":2,
-			"name":"Eclipse Luna J2E",
-			"binaryPath":"C:\\Program Files\\FileZilla FTP Client\\filezilla.exe",
-			"iconPath":"C:\\Program Files (x86)\\Eclipse Luna J2E\\java_ee_logo.png"
-		},
-		{
-			"id":3,
-			"name":"Scala IDE",
-			"binaryPath":"C:\\TOTOTO\\system32\\cmd.exe",
-			"iconPath":"C:\\Program Files (x86)\\Scala IDE\\scala_logo.png"
+			"name":"Example Firefox",
+			"binaryPath":"/usr/bin/firefox",
+			"iconPath":"/usr/lib/firefox/browser/chrome/icons/default/default64.png"
 		}
 	],
 	"settings": {
-		"quit_on_program_launched":false
+		"quit_on_program_launched":true
 	}
 }

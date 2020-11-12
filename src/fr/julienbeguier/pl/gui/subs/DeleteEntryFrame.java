@@ -51,8 +51,10 @@ public class DeleteEntryFrame extends AEntryFrame {
 				Configuration config = Configuration.getInstance();
 				config.removeElementAtId(pe.getProgramElementJson().getId());
 
-				// Remove entry from main panel
-				lp.removeElement(pe);
+				/* Removing the entry from main panel is
+				 * not needed since refreshProgramList()
+				 * is called on Done Button action
+				 */
 
 				// Refresh the delete program list
 				refreshDeleteProgramList();

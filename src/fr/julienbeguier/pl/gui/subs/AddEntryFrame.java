@@ -25,7 +25,6 @@ import org.json.JSONObject;
 import fr.julienbeguier.pl.config.Configuration;
 import fr.julienbeguier.pl.gui.IconLoader;
 import fr.julienbeguier.pl.gui.LauncherPanel;
-import fr.julienbeguier.pl.gui.ProgramElement;
 import fr.julienbeguier.pl.json.ProgramElementJson;
 
 public class AddEntryFrame extends AEntryFrame {
@@ -149,8 +148,6 @@ public class AddEntryFrame extends AEntryFrame {
 					String path = pathInput.getText();
 					String oIconPath = optionalIconPathInput.getText();
 					ProgramElementJson pej = new ProgramElementJson(id, name, path, oIconPath);
-					ProgramElement pe = new ProgramElement(pej);
-
 
 					// Add new entry to configuration file
 					JSONObject jsonPe = new JSONObject(pej);
@@ -158,8 +155,11 @@ public class AddEntryFrame extends AEntryFrame {
 					config.getPrograms().put(jsonPe);
 					config.writeConfiguration();
 
-					// Add new entry to main panel
-					lp.addElement(pe);
+					/* Adding the new entry to main panel is not
+					 * needed since refreshProgramList() is called
+					 * instead
+					 */
+					lp.refreshProgramList();
 
 					// Reset input fields
 					resetInputFields();
