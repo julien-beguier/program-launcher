@@ -42,6 +42,11 @@ public class DeleteEntryFrame extends AEntryFrame {
 
 				// Get selected entry
 				ProgramListElement ple = programsListed.getSelectedValue();
+
+				// if none selected, abort delete action
+				if (null == ple)
+					return;
+
 				ProgramElement pe = ple.getProgramElement();
 
 				// Remove entry from scroll panel list
