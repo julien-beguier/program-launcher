@@ -3,11 +3,12 @@ OK			faire marcher le menu Save Settings
 
 OK			fenetre d'ajout dans la liste
 OK			fenetre pour supprimer dans la liste
+OK				-> Fix NullPointer when none selected and clic on Delete
 CANCELED	fenetre pour gérer la liste
 
 OK			bouton pour recuperer le path proprement
 OK			corriger le resize quand on ajoute ou supprime des entrees
-			
+
 OK			changer le nom du fichier de conf -> program_launcher_settings.json
 OK			changer le systeme de chargement du fichier de configuration
 OK				->	Si pas de fichier -> le creer, ecrire la conf par defaut, liste
@@ -15,6 +16,8 @@ OK				->	Si pas de fichier -> le creer, ecrire la conf par defaut, liste
 				->	Si fichier vide (remise a zero manuelle) ou malformé -> ecrire la conf
 					par defaut, liste vide et proposer d'ajouter dans la liste
 OK				->	Si fichier existant + est lisible -> charger les settings et la liste
+OK			Fix le chargement des infos du launcher (version) et des settings qui n'étaient
+			pas pris en compte si le ficher de settings était déjà présent sur le disque
 
 			faire le menu des settings
 

@@ -136,12 +136,10 @@ public class Configuration {
 		}
 	}
 
-	private void parseSettingsJson() {
+	private void parseOnlyInfosAndSettings() {
 		try {
 			this.configurationObj = new JSONObject(this.configFileContent);
 			this.launcherInfosObj = this.configurationObj.getJSONObject(this.CONF_KEY_LAUNCHER_INFOS);
-			this.programs = this.configurationObj.getJSONArray(this.CONF_KEY_PROGRAMS);
-			this.nPrograms = this.programs.length();
 
 			Settings settings = Settings.getInstance();
 			this.settingsObj = this.configurationObj.getJSONObject(this.CONF_KEY_SETTINGS);
@@ -152,20 +150,38 @@ public class Configuration {
 		}
 	}
 
-	public void readConfiguration() {
-		// Checking for a saved settings file
-		 boolean settingsLoaded = checkForSavedConfiguration();
+	private void parseSettingsJson() {
+		try {
+			this.configurationObj = new JSONObject(this.configFileContent);
+			this.programs = this.configurationObj.getJSONArray(this.CONF_KEY_PROGRAMS);
+			this.nPrograms = this.programs.length();
 
-		if (!settingsLoaded) {
-			// Otherwise reading the default settings file inside Jar (or resources)
-			readDefaultConfiguration();
+			// Put the loaded default launcher_infos & settings
+			this.configurationObj.put(this.CONF_KEY_LAUNCHER_INFOS, this.launcherInfosObj);
+			this.configurationObj.put(this.CONF_KEY_SETTINGS, this.settingsObj);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public void readConfiguration() {
+		/*
+		 *  Reading the default settings file inside Jar (or
+		 *  resources) and then parse only the launcher_infos
+		 *  and settings in case of changes
+		 */
+		readDefaultConfiguration();
+		parseOnlyInfosAndSettings();
+		
+		// Checking for a saved settings file
+		checkForSavedConfiguration();
 
 		// When the settings file is read, load it's content into JsonObjects for manipulation
 		parseSettingsJson();
 
-		// Finally, write the default settings file if the program is launched for the first time
-		this.writeConfiguration();
+		// Finally, write the loaded settings file on disk
+		writeConfiguration();
 	}
 
 	public void writeConfiguration() {
@@ -283,7 +299,7 @@ public class Configuration {
 		return this.configurationObj;
 	}
 
-	public JSONObject getProgramInfos() {
+	public JSONObject getLauncherInfos() {
 		return this.launcherInfosObj;
 	}
 

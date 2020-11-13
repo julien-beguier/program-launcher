@@ -89,7 +89,7 @@ public class DeleteEntryFrame extends AEntryFrame {
 
 		// Build the program list
 		Configuration config = Configuration.getInstance();
-		this.programsListed = config.getProgramList(scrollPanelDimension.width);
+		this.programsListed = config.getProgramList(this.scrollPanelDimension.width);
 
 		Dimension customScrollPanelDimension = calculateCustomScrollPanelDimension(this.scrollPanelDimension, actionsContent.getWidth(), actionsContent.getHeight());
 		this.scrollPane.setPreferredSize(customScrollPanelDimension);
@@ -111,7 +111,7 @@ public class DeleteEntryFrame extends AEntryFrame {
 
 		// Rebuild the program list
 		Configuration config = Configuration.getInstance();
-		this.programsListed = config.getProgramList(scrollPanelDimension.width);
+		this.programsListed = config.getProgramList(this.scrollPanelDimension.width);
 		this.scrollPane.add(this.programsListed);
 		this.validate();
 	}

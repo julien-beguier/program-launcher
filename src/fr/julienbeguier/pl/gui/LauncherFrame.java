@@ -136,7 +136,7 @@ public class LauncherFrame extends JFrame {
 		// Init program version
 		try {
 			Configuration configFile = Configuration.getInstance();
-			this.PROGRAM_VERSION = configFile.getProgramInfos().getString(configFile.getConfKeyProgramInfosVersion());
+			this.PROGRAM_VERSION = configFile.getLauncherInfos().getString(configFile.getConfKeyProgramInfosVersion());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
